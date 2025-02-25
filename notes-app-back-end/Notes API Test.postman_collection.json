@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "b2f5e1f6-2c56-4d5d-aab1-b8592b21eb4d",
+		"name": "Notes API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adding Notes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response status code should have 201 value', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response Content-Type header should have application/json value',() => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							" const responseJson = pm.response.json();\r",
+							" pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have the correct property and value', () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.ownProperty('status');\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
+							"    pm.expect(responseJson).to.ownProperty('message');\r",
+							"    pm.expect(responseJson.message).to.equals('Catatan berhasil ditambahkan');\r",
+							"    pm.expect(responseJson).to.ownProperty('data');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body data should have noteId property and not equal to empty', () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"    const { data } = responseJson;\r",
+							"       pm.expect(data).to.ownProperty('noteId');\r",
+							"    pm.expect(data.noteId).to.not.equals('');\r",
+							"\r",
+							"     pm.environment.set('noteId', data.noteId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Catatan A\",\r\n    \"tags\": [\"Android\", \"Web\"],\r\n    \"body\": \"Isi dari catatan A\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/notes",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting All Notes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Getting Specified Name",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Update Note",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Note",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
